@@ -260,17 +260,6 @@ class Disperse(Animation):
 
 
 
-
-
-def hhh(mobject):
-    mobject.add(Circle(color = GREEN))
-    return mobject
-class aaa(Animation):
-    def __init__(self,mobject):
-        self.mobject = mobject
-    def animate(self):
-        self.play(FadeIn(self.mobject))
-
 class CustomAnimation(Scene):
 
     def construct(self):
@@ -278,7 +267,20 @@ class CustomAnimation(Scene):
         # self.add(stars)
         # self.wait(1)
         # self.play(Disperse(stars,dot_number = 200,run_time=3))
-        # circle = hhh(self)
-        # self.play(circle.animate.shift(UP*2),run_time=2)
-        c = hhh(self)
-        self.play(aaa(c),run_time=2)
+
+        star = Star(color = YELLOW,fill_opacity=1).scale(3)
+        dots = VGroup(*[Dot(radius=0.05).move_to(star.point_from_proportion(p)) 
+            for p in np.linspace(0,1,200)]
+            )
+        for dot in dots:
+            dot.initial_position = dot.get_center()
+            dot.shift_vector = 2*(dot.get_center())
+
+        self.play(*[dot.animate.move_to(star.point_from_proportion(1-i/200)) for i ,dot in enumerate(dots)],run_time=3)
+        # enumrate is a build-in function in python,it can switch iterator to index and value.
+        # we can use like this:
+        # for i,dot in enumerate(dots):
+        #     i is ths index of the dot
+        #     dot is the dot itself.(value of the iterator)
+       
+        
