@@ -23,6 +23,7 @@ print("this is a string with no \\n",end = "")
 
 # print(f"You entered {a}")
 
+
 #3随机数
 import random
 
