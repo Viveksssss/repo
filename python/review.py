@@ -186,3 +186,4 @@ class people():
         print(self.name)
 
 a = people("John")
+

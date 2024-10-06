@@ -260,27 +260,72 @@ class Disperse(Animation):
 
 
 
-class CustomAnimation(Scene):
+# class CustomAnimation(Scene):
 
-    def construct(self):
+    # def construct(self):
         # stars = Star(color = YELLOW, fill_opacity=1).scale(3)
         # self.add(stars)
         # self.wait(1)
         # self.play(Disperse(stars,dot_number = 200,run_time=3))
 
-        star = Star(color = YELLOW,fill_opacity=1).scale(3)
-        dots = VGroup(*[Dot(radius=0.05).move_to(star.point_from_proportion(p)) 
-            for p in np.linspace(0,1,200)]
-            )
-        for dot in dots:
-            dot.initial_position = dot.get_center()
-            dot.shift_vector = 2*(dot.get_center())
 
-        self.play(*[dot.animate.move_to(star.point_from_proportion(1-i/200)) for i ,dot in enumerate(dots)],run_time=3)
+        # star = Star(color = YELLOW,fill_opacity=1).scale(3)
+        # dots = VGroup(*[Dot(radius=0.05).move_to(star.point_from_proportion(p)) 
+        #     for p in np.linspace(0,1,200)]
+        #     )
+        # for dot in dots:
+        #     dot.initial_position = dot.get_center()
+        #     dot.shift_vector = 2*(dot.get_center())
+
+
+        # self.play(*[dot.animate.move_to(star.point_from_proportion(1-i/200)) for i ,dot in enumerate(dots)],run_time=3)
         # enumrate is a build-in function in python,it can switch iterator to index and value.
         # we can use like this:
         # for i,dot in enumerate(dots):
         #     i is ths index of the dot
         #     dot is the dot itself.(value of the iterator)
-       
+
+
+        # use add_updater can connect two items toghter and update them together.
+        # circle = Circle(color = BLUE,fill_opacity=1)
+        # text = Text("Hello World",font_size=24,color = RED)
+        # square = Square(color = GREEN,fill_opacity=1)
+
+        # square.add_updater(lambda m: m.next_to(circle,RIGHT,buff=0.5))
+        # circle.add_updater(lambda m: m.next_to(text,DOWN,buff=0.5))
+        # self.add(circle,text,square)
+        # self.wait(1)
+        # self.play(text.animate.shift(UP*2))
+        # self.wait(1)
+
+
+class name(Scene):
+    def construct(self):
+        c = Circle(color = RED,fill_opacity = 0.3,radius = 0.5)
+        s = SurroundingRectangle(c,color = BLUE,corner_radius=0.1)
+        t = Text("Manim").next_to(s,UP,buff = 0.5)
+
+        self.play(Write(c),DrawBorderThenFill(s),Write(t))
+
+        group = VGroup(c,s,t)
+        csgroup = VGroup(c,s)
+        self.play(t.animate.move_to([-4,0,0]),csgroup.animate.move_to([4,0,0]))
+
+        arrow = always_redraw(lambda: Line(buff = 0.5,start = csgroup.get_left(),end = t.get_right(),color = WHITE,stroke_width = 2).add_tip(at_start = True,tip_shape = StealthTip).add_tip(tip_shape = StealthTip))
+
+        self.play(Write(arrow))
+
+        self.play(Indicate(t,scale = 1.5,color = ORANGE))
+        self.play(Rotate(s,rangel = PI/2),ScaleInPlace(c,2))
+        self.play(csgroup.animate.move_to([0,0,0]))
+
+        self.play(FadeOut(arrow),FadeOut(t),run_time = 0.4)
+        self.play(ShrinkToCenter(s),ScaleInPlace(c,30))
+        self.play(FadeOut(c))
+
+        self.wait()
         
+        k = Text("Bye",font_size=48)
+        self.play(Write(k))
+        self.play(Unwrite(k))
+
