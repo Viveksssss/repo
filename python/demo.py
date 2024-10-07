@@ -299,7 +299,7 @@ class Disperse(Animation):
         # self.wait(1)
 
 
-class name(Scene):
+# class name(Scene):
     def construct(self):
         c = Circle(color = RED,fill_opacity = 0.3,radius = 0.5)
         s = SurroundingRectangle(c,color = BLUE,corner_radius=0.1)
@@ -329,3 +329,78 @@ class name(Scene):
         self.play(Write(k))
         self.play(Unwrite(k))
 
+
+class Test(Scene):
+    def construct(self):
+        t1 = Text("Hello ")
+        t2 = Text("there")
+        t3 = Text("d")
+        t4 = Text("o")
+        t5 = Text("g")
+        group = VGroup(t1,t2,t3,t4,t5).arrange(RIGHT)
+        group[3:5].shift(0.1*DOWN)
+
+        group[2].set_color(RED)
+        group[3].set_color(BLUE)
+        group[4].set_color(ORANGE)
+
+
+        # here can not use Text,we should use Tex instead..
+        c = Circle(color = RED,radius = 0.3)
+        p = RegularPolygon(5,color = GREEN)
+
+        self.play(Write(group[2:]),run_time = 1)
+        self.play(FadeIn(group[0:2]),run_time = 1)
+
+        self.play(t1.animate.to_edge(UL,buff = 1),run_time = 1)
+        self.play(t2.animate.to_edge(UR,buff = 1),run_time = 1)
+ 
+        self.play(t3.animate.move_to([0,2,0]))
+        self.play(t4.animate.move_to([0,0,0]))
+        self.play(t5.animate.move_to([0,-2,0]))
+
+        c = Circle(color = RED,radius = 0.5).move_to(t4.get_center())
+        p = RegularPolygon(5,color = GREEN).scale(0.5).move_to(t3.get_center())
+        s = Square(color = BLUE,fill_opacity = 0.5).scale(0.5).move_to(t5.get_center())
+
+        self.play(SpinInFromNothing(s),SpinInFromNothing(p),GrowFromCenter(c),run_time = 2)
+        self.play(Rotate(group[2:5],PI*4),Rotate(VGroup(p,s),PI*4),run_time = 1)
+
+        pgroup = VGroup(p,t3)
+        sgroup = VGroup(s,t5)
+
+        self.play(Swap(pgroup,sgroup))
+
+        Tx = Text("Bye")
+        ggroup = Group(group,c,p,s)
+        self.play(ReplacementTransform(ggroup,Tx),run_time = 0.5)
+
+        self.play(FadeOut(Tx),run_time = 2)
+
+        self.wait(1)
+
+class Test2(Scene):
+    def construct(self):
+
+        plane = NumberPlane()
+        axes = Axes(x_range=(-10,10),y_range=(-5,5),tips = False)
+        # x = axes.get_x_axis_label("x")
+        # y = axes.get_y_axis_label("y") #now we can not use it because of lacking of the latex support.
+        tri = Triangle(color = GREEN,fill_opacity = 0.5).move_to(axes.c2p(-3,4))
+
+        dot = Dot(color = RED,radius = 0.1)
+        dot_label = always_redraw(lambda:Text("Dot",font_size = 14).next_to(dot,DOWN,buff = 0.1))
+  
+        self.play(Create(axes),plane.animate,run_time = 2)
+        self.play(Write(tri),Write(dot),Write(dot_label),run_time = 2)
+
+        self.play(dot.animate.move_to(axes.c2p(7,-3)),run_time = 1)
+
+        dot_label.clear_updaters()  # the function of clear_updaters is to remove alla the updaters of the dot_label
+        # if we don't clear the updaters,the dot_label will always be redraw aslong as before (392),the font_size of dot_label will not change.
+
+        group = VGroup(axes,tri,dot,dot_label)
+
+        self.play(group.animate.scale(0.3).to_edge(UL),run_time = 2)
+
+        
