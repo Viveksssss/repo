@@ -1,5 +1,6 @@
 from manim import *
 from colour import Color
+import numpy as np
 config.font_size = 24
 # config.background_color = WHITE
 # config.frame_height = 10
@@ -7,6 +8,18 @@ config.font_size = 24
 
 # config.pixel_height = 500
 # config.pixel_width = 500
+
+# the command for rendering the animation is: manima -qk -p demo.py class_name
+# of which after q,we can choose the quality of the animation
+# k is for fourk, which means the resolution of the animation is 4k
+# h is for hign quality, which means the resolution of the animation is 1080p
+# m is for medium quality, which means the resolution of the animation is 720p
+# l is for low quality, which means the resolution of the animation is 480p
+
+# -p is for preview, which means the animation will be rendered in the preview window
+
+
+
 class Try(Scene):    
     def construct(self):
         ax = Axes(x_range=(-3,3),y_range=(-3,3))
@@ -200,9 +213,6 @@ class AnimateMechanisms(Scene):
         self.play(FadeOut(t,run_time=0.3),Write(Text("Now we are done",color = GREEN,font_size=24).to_edge(DOWN),run_time = 5))
         
 class SimpleCustomAnimation(Scene):
-    
-
-    
     def construct(self):
         def spiral_out(mobject,time):
             radius = time*4
@@ -383,15 +393,15 @@ class Test2(Scene):
     def construct(self):
 
         plane = NumberPlane()
-        axes = Axes(x_range=(-10,10),y_range=(-5,5),tips = False)
-        # x = axes.get_x_axis_label("x")
-        # y = axes.get_y_axis_label("y") #now we can not use it because of lacking of the latex support.
+        axes = Axes(x_range=(-10,10),y_range=(-5,5),tips = False,x_length=13,y_length=7).add_coordinates()
+        x = axes.get_x_axis_label("x")
+        y = axes.get_y_axis_label("y") #if we use it,we should be support by latex.
         tri = Triangle(color = GREEN,fill_opacity = 0.5).move_to(axes.c2p(-3,4))
 
         dot = Dot(color = RED,radius = 0.1)
         dot_label = always_redraw(lambda:Text("Dot",font_size = 14).next_to(dot,DOWN,buff = 0.1))
   
-        self.play(Create(axes),plane.animate,run_time = 2)
+        self.play(Write(axes),plane.animate,run_time = 2)
         self.play(Write(tri),Write(dot),Write(dot_label),run_time = 2)
 
         self.play(dot.animate.move_to(axes.c2p(7,-3)),run_time = 1)
@@ -403,4 +413,91 @@ class Test2(Scene):
 
         self.play(group.animate.scale(0.3).to_edge(UL),run_time = 2)
 
+class Test3(Scene):
+    def construct(self):
+        t = ValueTracker(0)
+        num = always_redraw(lambda: DecimalNumber(t.get_value(),num_decimal_places = 2))
+        self.play(num.animate)
+        self.play(t.animate.set_value(30),run_time = 3)
+        self.wait(3)
+
+class Test4(Scene):
+    def construct(self):
+        axes = Axes(x_range=(-10,10),y_range=(-5,5),tips = False,x_length=13,y_length=7).add_coordinates()
+        x = axes.get_x_axis_label("x")
+        y = axes.get_y_axis_label("y") 
+        self.play(Write(axes),Write(x),Write(y))
+        num = ValueTracker(1)
+
+        curve = always_redraw(lambda:axes.plot(lambda x:np.sin(x*num.get_value())*num.get_value(),color = GREEN,stroke_width = 5))
+
         
+        self.play(Create(curve),run_time = 2)
+        for i in range(10):
+            self.play(num.animate.set_value(3),run_time = 2)
+            self.play(num.animate.set_value(0.3),run_time = 2)
+            self.play(num.animate.set_value(30),run_time = 2)
+
+        self.wait(3)
+
+class Test5(Scene):
+    def construct(self):
+        a = Text("manmal")
+        b = Text("manim")
+
+        g = VGroup(a,b)
+        g.arrange(DOWN,buff =4,aligned_edge = LEFT)
+        self.play(Write(a))
+        self.play(TransformMatchingShapes(a,b))
+
+class Test6(Scene):
+    def construct(self):
+        c = Circle(color = RED).scale(0.1)
+        c.set_fill(opacity = 1,color = WHITE)
+        c.set_stroke(color = ORANGE,width = 7)
+
+        s = SurroundingRectangle(c,color = RED,corner_radius=0.1)
+
+        t = Text("Hello there",font_size=32,font = "Sentient")
+        t[0:5].set_color(GOLD)
+        t[5:11].set_color(TEAL)
+
+        cs = VGroup(c,s)
+        cst = VGroup(cs,t).arrange(RIGHT)
+        cstt = VGroup(cs,t)
+
+        self.play(GrowFromCenter(c),SpinInFromNothing(s))
+        self.play(Write(t))
+
+        square = Square(color = WHITE,side_length=1.2).shift(RIGHT*0.90)
+        self.play(Write(square))
+
+        tsquare  = VGroup(t[5:11],square)
+        self.play(cs.animate.next_to(t[0:5],UP))
+        self.play(tsquare.animate.next_to(t[0:5],DOWN))
+
+        # if the mobject will be moved by more then 2 times in one play,we should adject the correct order.
+        self.play(square.animate.scale(3).move_to(ORIGIN),cstt.animate.move_to(ORIGIN),t[5:].animate.move_to(ORIGIN).shift(DOWN*0.3),run_time = 1)
+
+        dot =Dot(color = WHITE)
+
+        ggroup = VGroup(cst,square)
+        self.play(Transform(ggroup,dot))
+        self.play(ScaleInPlace(ggroup,300),run_time = 1)
+        self.play(FadeOut(ggroup),run_time =1)
+    
+class Test7(Scene):
+    def construct(self):
+        # def rotate(mobject,time):
+        #     angle = 2*time*PI
+        #     radius = 2*time
+        #     mobject.set_color(color = GREEN)
+        #     mobject.move_to(radius*np.cos(angle*3)*RIGHT+radius*np.sin(angle*3)*UP)
+
+        # dot = Dot(color = RED)
+        # self.add(dot)
+        # self.play(UpdateFromAlphaFunc(dot,rotate),run_time = 2)
+        c = Circle(color = RED)
+        s = Square(color = GREEN).to_edge(LEFT)
+        self.play(GrowFromCenter(c),run_time = 2)
+        self.play(Transform(c.copy(),s))

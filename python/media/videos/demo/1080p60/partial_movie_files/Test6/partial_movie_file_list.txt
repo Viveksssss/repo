@@ -1,0 +1,10 @@
+# This file is used internally by FFMPEG.
+file 'file:D:/Code/python/media/videos/demo/1080p60/partial_movie_files/Test6/3529212410_3316943633_223132457.mp4'
+file 'file:D:/Code/python/media/videos/demo/1080p60/partial_movie_files/Test6/3040924799_1628929659_3456045427.mp4'
+file 'file:D:/Code/python/media/videos/demo/1080p60/partial_movie_files/Test6/3040924799_2324903665_924011434.mp4'
+file 'file:D:/Code/python/media/videos/demo/1080p60/partial_movie_files/Test6/3040924799_3108101809_3445875826.mp4'
+file 'file:D:/Code/python/media/videos/demo/1080p60/partial_movie_files/Test6/3040924799_1139578573_3125497242.mp4'
+file 'file:D:/Code/python/media/videos/demo/1080p60/partial_movie_files/Test6/3040924799_4262979562_1117484201.mp4'
+file 'file:D:/Code/python/media/videos/demo/1080p60/partial_movie_files/Test6/3040924799_1074504891_1412841409.mp4'
+file 'file:D:/Code/python/media/videos/demo/1080p60/partial_movie_files/Test6/3040924799_641728230_1412841409.mp4'
+file 'file:D:/Code/python/media/videos/demo/1080p60/partial_movie_files/Test6/3040924799_1715309153_1412841409.mp4'
