@@ -497,7 +497,92 @@ class Test7(Scene):
         # dot = Dot(color = RED)
         # self.add(dot)
         # self.play(UpdateFromAlphaFunc(dot,rotate),run_time = 2)
-        c = Circle(color = RED)
-        s = Square(color = GREEN).to_edge(LEFT)
-        self.play(GrowFromCenter(c),run_time = 2)
-        self.play(Transform(c.copy(),s))
+        # c = Circle(color = RED)
+        # s = Square(color = GREEN).to_edge(LEFT)
+        # self.play(GrowFromCenter(c),run_time = 2)
+        # self.play(Transform(c.copy(),s))
+
+        # coordinate latex we can write formula like this:
+        t = Tex('$\\alpha \\beta \zeta 5\\frac{3}{4}$')
+        self.play(Write(t))
+
+class Test8(Scene):
+    def construct(self):
+        def update_curve(mobject,t):
+            radius = 2*t
+            angle = 2*t*PI
+            mobject.set_color(color = GOLD)
+            mobject.move_to(radius*np.cos(angle*t*3)*RIGHT+radius*np.sin(angle*t*3)*UP)
+
+        c = Circle(color = RED).scale(0.1)
+        c.set_fill(opacity = 1,color = WHITE)
+        c.set_stroke(color = ORANGE,width = 7)
+
+        s = SurroundingRectangle(c,color = RED,corner_radius=0.1)
+
+        t = Text("Hello there",font_size=32,font = "Sentient")
+        t[0:5].set_color(GOLD)
+        t[5:11].set_color(TEAL)
+
+        cs = VGroup(c,s)
+        cst = VGroup(cs,t).arrange(RIGHT)
+        cstt = VGroup(cs,t)
+
+        self.play(GrowFromCenter(c),SpinInFromNothing(s))
+        self.play(Write(t))
+
+        square = Square(color = WHITE,side_length=1.2).shift(RIGHT*0.90)
+        self.play(Write(square))
+
+        tsquare  = VGroup(t[5:11],square)
+        self.play(cs.animate.next_to(t[0:5],UP))
+        self.play(tsquare.animate.next_to(t[0:5],DOWN))
+
+        # if the mobject will be moved by more then 2 times in one play,we should adject the correct order.
+        self.play(square.animate.scale(3).move_to(ORIGIN),cstt.animate.move_to(ORIGIN),t[5:].animate.move_to(ORIGIN).shift(DOWN*0.3),run_time = 1)
+
+        dot =Dot(color = WHITE)
+
+        ggroup = VGroup(cst,square)
+        self.play(Transform(ggroup,dot))
+        self.play(ScaleInPlace(ggroup,300),run_time = 1)
+        self.play(FadeOut(ggroup),run_time =1)
+
+        c = Circle(color = RED,fill_opacity = 0.3,radius = 0.5)
+        s = SurroundingRectangle(c,color = BLUE,corner_radius=0.1)
+        t = Text("Manim").next_to(s,UP,buff = 0.5)
+
+        self.play(Write(c),DrawBorderThenFill(s),Write(t))
+
+        group = VGroup(c,s,t)
+        csgroup = VGroup(c,s)
+        self.play(t.animate.move_to([-4,0,0]),csgroup.animate.move_to([4,0,0]))
+
+        arrow = always_redraw(lambda: Line(buff = 0.5,start = csgroup.get_left(),end = t.get_right(),color = WHITE,stroke_width = 2).add_tip(at_start = True,tip_shape = StealthTip).add_tip(tip_shape = StealthTip))
+
+        self.play(Write(arrow))
+
+        self.play(Indicate(t,scale = 1.5,color = ORANGE))
+        self.play(Rotate(s,rangel = PI/2),ScaleInPlace(c,2))
+        self.play(csgroup.animate.move_to([0,0,0]))
+
+        self.play(FadeOut(arrow),FadeOut(t),run_time = 0.4)
+        self.play(ShrinkToCenter(s),ScaleInPlace(c,30))
+        self.play(FadeOut(c))
+
+        self.wait()
+
+        t = Text("Now we show something instereting").to_edge(DOWN)
+        s = Square(color = BLUE,fill_opacity = 0.5).scale(0.5)
+        c = Circle(color = RED,radius = 0.5,fill_opacity = 0.4)
+        self.play(SpinInFromNothing(s,run_time = 2),Write(t,run_time = 1))
+        self.play(ReplacementTransform(s,c,run_time = 2),Unwrite(t,run_time = 1))
+
+        self.play(UpdateFromAlphaFunc(c,update_curve))
+        self.play(c.animate.move_to(ORIGIN))
+        self.wait(2)
+        t = Text("That'all,bye!",font_size = 48)
+        self.play(ShrinkToCenter(c),run_time = 1)
+        self.play(Write(t))
+
+        self.wait(2)

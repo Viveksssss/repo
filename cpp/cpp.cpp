@@ -118,13 +118,19 @@ constexpr  int Fib<1> = 1;
 
 int main(){
     //***************************************
-    std::ios_base::sync_with_stdio(0);
-    std::cin.tie(0);
-    std::cout.tie(0);
-    //***************************************
-   cout << Fib<30><<endl;
-   cout << Fib<20><<endl;
-   
+        std::ios_base::sync_with_stdio(0);
+        std::cin.tie(0);
+        std::cout.tie(0);
+        //***************************************
+    cout << Fib<30><<endl;
+    cout << Fib<20><<endl;
+
+    int arr[] {1,23,4,4,5,6,7,8,9};
+    for(int p: arr){
+            cout << p << std::endl;
+    }
+
+
   
 }
 
