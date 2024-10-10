@@ -211,59 +211,128 @@
 //     return 0;
 // }
 
+// #include<bits/stdc++.h>
+// using namespace std;
+
+// class animal{
+//     public :int a;
+//     public:
+//         virtual void speak() const{//virtual关键字使得子类可以重写父类的speak方法
+//             cout << "animal speak"<<endl;
+//         }
+// };
+
+// class dog :virtual public animal{
+//     public :
+//         void speak()const override{
+//             cout << "dog speak"<<endl;
+//         }
+// };
+
+// class cat :virtual public animal{
+//     public :
+//         void speak() const override{
+//             cout << "cat speak"<<endl;
+//         }
+// };
+
+// void doSpeak(const animal&a){//传入引用，实现多态性
+//     a.speak();
+// }
+// template<int N>
+// constexpr static int Fib = Fib<N-1>+Fib<N-2>;
+// template<> constexpr int Fib<0> = 0;
+// template<> constexpr int Fib<1> = 1;
+// //template<> indicate that we wre specialize the template for N=0 and N=1
+
+// int main(){
+      
+//     // cout << *((int*)*(int*)&hhh+1)<<endl;//通过地址偏移量找到cat
+//     // cout << *((int*)*((int*)&hhh+1)+1)<<endl;//通过地址偏移量找到dog
+
+//     //通过地址偏移量找到a
+//     // cout << ((animal*)((char*)&hhh+*((int*)*(int*)&hhh+1)))->a<<endl;
+//     // cout << *((int*)((char*)&hhh+*((int*)*((int*)&hhh+1)+1)))<<endl;
+
+    
+//     // animal*p = new dog;
+//     // ((void(*)()) (*(int*)*(int*)p))();
+//     cout << Fib<30><<endl;
+    
+// }
+
+
+//当包含含有类模板的文件的时候，我们通常不会将.h和.cpp文件分开，而是将所有的类模板都放在一个文件中，这样可以减少编译时间。
+//同时,后缀名约定为.hpp
+
+
+
+//友元函数（含模板）的类外实现：复杂
+//首先类内定义，同时函数名后要加<>,表示是模板函数
+//然后在类外实现，加上模板参数正常编写
+//但是仍然编译不通过，原因是，我们在类外实现时，需要实例化模板，但是实例化模板需要知道模板参数，而模板参数在类外无法获得，所以编译器无法实例化模板。
+//解决方法：
+//首先在类外全局声明友元函数
+//同时把参数涉及到的类也声明出来
+#include"String.cpp"
 #include<bits/stdc++.h>
 using namespace std;
 
-class animal{
-    public :int a;
-    public:
-        virtual void speak() const{//virtual关键字使得子类可以重写父类的speak方法
-            cout << "animal speak"<<endl;
-        }
-};
 
-class dog :virtual public animal{
+//example 1
+template<class T1,class T2>
+class Person;
+
+template<class T1,class T2>
+void ShowPerson(Person<T1,T2>&p);
+
+
+//example 2
+template<class T1,class T2>
+void hhh(T1 name,T2 age);
+
+template<class T1,class T2>
+class Person{
+    T1 name;
+    T2 age;
     public :
-        void speak()const override{
-            cout << "dog speak"<<endl;
-        }
+        friend void ShowPerson<>(Person<T1,T2>&p);
+        friend void hhh<>(T1 name,T2 age);
+        Person(T1 name,T2 age);        
 };
 
-class cat :virtual public animal{
-    public :
-        void speak() const override{
-            cout << "cat speak"<<endl;
-        }
-};
-
-void doSpeak(const animal&a){//传入引用，实现多态性
-    a.speak();
+//out of class implementation of template functions needs to be like this:
+template<class T1,class T2>
+Person<T1,T2>::Person(T1 name,T2 age){
+    this -> name = name;
+    this -> age = age;
 }
-template<int N>
-constexpr static int Fib = Fib<N-1>+Fib<N-2>;
-template<>
-constexpr int Fib<0> = 0;
-template<>
-constexpr int Fib<1> = 1;
-constexpr int c = 5;
 
+
+//example  1
+template<class T1,class T2>
+void ShowPerson(Person<T1,T2>&p){
+}
+
+//example 2
+template<class T1,class T2>
+void hhh(T1 name,T2 age){
+}
 
 
 int main(){
-    
-    
-    // cout << *((int*)*(int*)&hhh+1)<<endl;//通过地址偏移量找到cat
-    // cout << *((int*)*((int*)&hhh+1)+1)<<endl;//通过地址偏移量找到dog
-
-    //通过地址偏移量找到a
-    // cout << ((animal*)((char*)&hhh+*((int*)*(int*)&hhh+1)))->a<<endl;
-    // cout << *((int*)((char*)&hhh+*((int*)*((int*)&hhh+1)+1)))<<endl;
-
-    
-    // animal*p = new dog;
-    // ((void(*)()) (*(int*)*(int*)p))();
-    cout << Fib<30><<endl;
-    
+    //***************************************
+    // std::ios_base::sync_with_stdio(0);
+    // std::cin.tie(0);
+    // std::cout.tie(0);
+    //***************************************
+    Person<String,int>p =Person<String,int>("John",2);
+    ShowPerson(p);
+    hhh<String ,int>("John",2);
+    return 0;
 }
+
+
+
 
 
