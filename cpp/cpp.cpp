@@ -274,64 +274,132 @@
 //解决方法：
 //首先在类外全局声明友元函数
 //同时把参数涉及到的类也声明出来
-#include"String.cpp"
+// #include"String.cpp"
+// #include<bits/stdc++.h>
+// using namespace std;
+
+
+// //example 1
+// template<class T1,class T2>
+// class Person;
+
+// template<class T1,class T2>
+// void ShowPerson(Person<T1,T2>&p);
+
+
+// //example 2
+// template<class T1,class T2>
+// void hhh(T1 name,T2 age);
+
+// template<class T1,class T2>
+// class Person{
+//     T1 name;
+//     T2 age;
+//     public :
+//         friend void ShowPerson<>(Person<T1,T2>&p);
+//         friend void hhh<>(T1 name,T2 age);
+//         Person(T1 name,T2 age);        
+// };
+
+// //out of class implementation of template functions needs to be like this:
+// template<class T1,class T2>
+// Person<T1,T2>::Person(T1 name,T2 age){
+//     this -> name = name;
+//     this -> age = age;
+// }
+
+
+// //example  1
+// template<class T1,class T2>
+// void ShowPerson(Person<T1,T2>&p){
+// }
+
+// //example 2
+// template<class T1,class T2>
+// void hhh(T1 name,T2 age){
+// }
+
+
+// int main(){
+//     //***************************************
+//     // std::ios_base::sync_with_stdio(0);
+//     // std::cin.tie(0);
+//     // std::cout.tie(0);
+//     //***************************************
+//     // Person<String,int>p =Person<String,int>("John",2);
+//     // ShowPerson(p);
+//     // hhh<String ,int>("John",2);
+
+    
+//     return 0;
+// }
+
+
+// #include<bits/stdc++.h>
+// #include<stdexcept>
+// using namespace std;
+
+
+// class myexception{
+//     public:
+//         myexception(){cout << "constructor of myexception called"<<endl;}
+//         myexception(const myexception& e){cout << "copy constructor of myexception called"<<endl;}
+//         ~myexception(){cout << "destructor of myexception called"<<endl;}
+// };
+
+// int main(){
+//     //***************************************
+//     std::ios_base::sync_with_stdio(0);
+//     std::cin.tie(0);
+//     std::cout.tie(0);
+//     //***************************************
+//     //1.0
+//     // try{
+//     //     throw myexception();
+//     // }
+//     // catch(myexception e){
+//     //     cout << "catch exception"<<endl;
+//     // }
+//     // //2.0
+//     // try{
+//     //     throw myexception();
+//     // }
+//     // catch(myexception &e){
+//     //     cout << "catch exception"<<endl;
+//     // }
+//     //3.0不适用
+//     // try{
+//     //     throw &(myexception());//throwing temporary object is not secure,so we can not do this successfully. 
+//     // }
+//     // catch(myexception *e){
+//     //     cout << "catch exception"<<endl;
+//     // }
+
+//     int a[10];
+//     try{
+//         cout << a[12]<<endl;
+//         throw runtime_error("out of range");
+//     }
+//     catch(exception &e){
+//         cout << e.what()<<endl;
+//     }
+
+//     return 0;
+// }
+
 #include<bits/stdc++.h>
 using namespace std;
 
-
-//example 1
-template<class T1,class T2>
-class Person;
-
-template<class T1,class T2>
-void ShowPerson(Person<T1,T2>&p);
-
-
-//example 2
-template<class T1,class T2>
-void hhh(T1 name,T2 age);
-
-template<class T1,class T2>
-class Person{
-    T1 name;
-    T2 age;
-    public :
-        friend void ShowPerson<>(Person<T1,T2>&p);
-        friend void hhh<>(T1 name,T2 age);
-        Person(T1 name,T2 age);        
-};
-
-//out of class implementation of template functions needs to be like this:
-template<class T1,class T2>
-Person<T1,T2>::Person(T1 name,T2 age){
-    this -> name = name;
-    this -> age = age;
-}
-
-
-//example  1
-template<class T1,class T2>
-void ShowPerson(Person<T1,T2>&p){
-}
-
-//example 2
-template<class T1,class T2>
-void hhh(T1 name,T2 age){
-}
-
-
 int main(){
     //***************************************
-    // std::ios_base::sync_with_stdio(0);
-    // std::cin.tie(0);
-    // std::cout.tie(0);
+    std::ios_base::sync_with_stdio(0);
+    std::cin.tie(0);
+    std::cout.tie(0);
     //***************************************
-    Person<String,int>p =Person<String,int>("John",2);
-    ShowPerson(p);
-    hhh<String ,int>("John",2);
+
+
     return 0;
 }
-
 
 
 
