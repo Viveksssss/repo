@@ -15,12 +15,14 @@ int main(){
     // int *p = new int(20);............................................
     
     
-    // p = nullptr;//p所指向的内存被up接管后，直接将p置空即可，不需要delete
     //1.0std::unique_ptr<int>up(p);
+    // p = nullptr;//p所指向的内存被up接管后，直接将p置空即可，不需要delete
+
     //2.0std::unique_ptr<int>ups{new int(200)};//c++14新特性，直接初始化
     // std::unique_ptr<int>ups(new int(200));
     // cout << *ups << endl;
     // *up = 30;
+    
     //3.0 std::unique_ptr<int>up2 = std::make_unique<int>(300);
     // std::unique_ptr<int[]>uup = std::make_unique<int[]>(20);
     // for(int i=0;i<20;i++){
