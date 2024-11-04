@@ -46,3 +46,20 @@ void MyLabel::mousePressEvent(QMouseEvent*ev){
 void MyLabel::mouseReleaseEvent(QMouseEvent*ev){
     qDebug()<<"release";
 }
+
+bool MyLabel::event(QEvent*e){
+    //鼠标按下，拦截
+    if(e->type() == QEvent::MouseButtonPress){
+
+        QMouseEvent*ev = static_cast<QMouseEvent*>(e);
+
+        QString str = QString("in event 当前坐标是 x = %1,y = %2").arg(ev->x()).arg(ev->y());
+
+        qDebug()<<str;
+
+        return true;
+    }
+
+    //其他事件抛给父类处理
+    return QLabel::event(e);
+}

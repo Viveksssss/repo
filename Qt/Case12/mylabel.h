@@ -16,6 +16,8 @@ public:
     void mouseMoveEvent(QMouseEvent*ev);
     void mousePressEvent(QMouseEvent*ev);
     void mouseReleaseEvent(QMouseEvent*ev);
+
+    bool event(QEvent*);
 signals:
 };
 
