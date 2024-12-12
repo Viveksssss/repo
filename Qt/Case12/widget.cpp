@@ -1,7 +1,8 @@
 #include "widget.h"
 #include "ui_widget.h"
 #include <QTimer>
-
+#include <QDebug>
+#include <QMouseEvent>
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
@@ -36,6 +37,24 @@ Widget::Widget(QWidget *parent)
         }
     });
 
+    ui->label->installEventFilter(this);
+
+}
+
+bool Widget::eventFilter(QObject*obj,QEvent*e){
+    if(obj == ui->label){
+        if(e->type() == QEvent::MouseButtonPress){
+
+            QMouseEvent*ev = static_cast<QMouseEvent*>(e);
+
+            QString str = QString("in event 当前坐标是 x = %1,y = %2").arg(ev->x()).arg(ev->y());
+
+            qDebug()<<str;
+
+            return true;
+        }
+    }
+    return QWidget::eventFilter(obj,e);
 }
 
 void Widget::timerEvent(QTimerEvent*e){

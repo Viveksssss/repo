@@ -387,6 +387,64 @@
 //     return 0;
 // }
 
+
+// #include<iostream>
+// #include<chrono>
+
+// #include<vector>
+// using namespace std;
+// int main(int argc,char*argv[]){
+
+//     std::ios_base::sync_with_stdio(0);
+//     std::cin.tie(0);
+//     std::cout.tie(0);
+
+
+//     // auto start = std::chrono::system_clock::now();
+
+//     //     for(int i = 0;i<10000000;i++){
+//     //         cout << i<<"\n";
+//     //     }
+
+//     // auto end = std::chrono::system_clock::now();
+
+//     // std::chrono::duration<double> diff = end-start;
+//     // std::cout << "代码运行时间: " << diff.count() << " 秒\n";
+
+
+//     stacj
+
+// }
+
+// #include<bits/stdc++.h>
+// using namespace std;
+
+// int main(){
+//     //***************************************
+//     std::ios_base::sync_with_stdio(0);
+//     std::cin.tie(0);
+//     std::cout.tie(0);
+//     //***************************************
+//     auto start = std::chrono::system_clock::now();
+//     vector<int>vec1;
+//     vec1.reserve(10000000);
+//     std::iota(vec1.begin(),vec1.end(),1);
+//     vector<int>vec2;
+//     vec2.reserve(10000000);
+//     std::copy(vec1.begin(),vec1.end(),std::back_inserter(vec2));
+//     // for(int i = 0;i<10000000;i++){
+//         // vec2[i] = vec1[i];
+//     // }
+//     auto end = std::chrono::system_clock::now();
+
+//     std::chrono::duration<double> diff = end-start;
+//     std::cout << "代码运行时间: " << diff.count() << " 秒\n";
+
+
+//     return 0;
+// }
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -396,5 +454,9 @@ int main(){
     std::cin.tie(0);
     std::cout.tie(0);
     //***************************************
-
+    vector<int>vec  = {0,1,2,3,4,4,6,7,8,9};
+    int c =5;
+    int p = lower_bound(vec.begin(),vec.end(),c)-vec.begin();
+    cout << p<<endl;
+    return 0;
 }
