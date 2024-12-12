@@ -6,7 +6,7 @@
                 "${workspaceFolder}/**",
                 "D:\\Code\\cpp"
             ],
-            "compilerPath": "D:/Variable/MinGw/mingw64/bin/g++.exe",
+            "compilerPath": "D:/Variable/MinGw/w64devkit/bin/g++.exe",
             "cStandard": "c23",
             "cppStandard": "c++23",
             "intelliSenseMode": "windows-gcc-x64",
