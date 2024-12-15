@@ -445,18 +445,112 @@
 // }
 
 
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
-int main(){
+//NVI(Non-Virtual Interface)手法
+// class pureclass{
+//     public:
+//         virtual ~pureclass(){
+//             cout << "pureclass destructor called"<<endl;
+//         }
+//     private:
+//         virtual void display() const= 0;
+// };
+
+// void pureclass::display() const{
+//     cout << "pureclass display"<<endl;
+// }
+
+// class derivedclass : public pureclass{
+//     public:
+//         void displays() const{
+//             this->display();
+//         }
+//         virtual ~derivedclass(){
+//             cout << "derivedclass destructor called"<<endl;
+//         } 
+
+//     private:
+//         virtual void display() const override{
+//             cout << "derivedclass display"<<endl;
+//         }
+// };
+
+
+//Startegy pattern
+class Gamecharacter;
+int defaultHealthCalc(const Gamecharacter &gc){
+    return 100;
+}
+class Gamecharacter{
+    public :
+        typedef int(*HealthCalc)(const Gamecharacter &);
+        Gamecharacter(HealthCalc hcf = defaultHealthCalc):healthcalc(hcf){}
+        int getHealth() const{
+            return healthcalc(*this);
+        }
+    private:
+        HealthCalc healthcalc;
+};
+//函数指针
+typedef int (*func)(const int, const int);
+//回调函数
+int add(const int a,const int b){
+    return a + b;
+}
+int minuss(const int a,const int b){
+    return a - b;
+}
+//高阶函数
+int funcc(func f,const int a,const int b){
+    return f(a,b);
+}
+
+
+class Game{
+    public:
+        virtual void play(){
+            cout << "yes" << endl;
+        }
+};
+class GameFirst:public Game{
+    public :
+        void play(){
+            cout << "first game" << endl;
+        }
+};
+class GameSecond:public GameFirst{
+    public :
+        void play(){
+            cout << "second game" << endl;
+        }
+};
+
+int main()
+{
     //***************************************
     std::ios_base::sync_with_stdio(0);
     std::cin.tie(0);
     std::cout.tie(0);
     //***************************************
-    vector<int>vec  = {0,1,2,3,4,4,6,7,8,9};
-    int c =5;
-    int p = lower_bound(vec.begin(),vec.end(),c)-vec.begin();
-    cout << p<<endl;
+    // cout << funcc(add, 1, 2) << endl;
+    // cout << funcc(minuss, 1, 2) << endl;
+
+    // std::function<int(const int, const int)> funs1 = add;
+    // std::function<int(const int, const int)> funs2 = std::bind(minuss, 1, 2);
+    // cout << funs1(1, 2) << endl;
+    // cout << funs2(1, 2) << endl;
+    Game player1;
+    GameFirst player2;
+    GameSecond player3;
+    std::function<void()> func1 = std::bind(&Game::play, &player1);
+    std::function<void()> func2 = std::bind(&Game::play, &player2);
+    std::function<void()> func3 = std::bind(&Game::play, &player3);
+    func1();
+    func2();
+    func3();
     return 0;
 }

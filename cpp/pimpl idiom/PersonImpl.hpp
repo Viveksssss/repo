@@ -3,7 +3,7 @@
 
 #include<string>
 #include "Person.h"
-class PersonImpl{
+class Person::PersonImpl{
     public:
         friend class Person;
         PersonImpl(int age_,std::string name_,int address_):age(age_),name(name_),address(address_){};
