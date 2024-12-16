@@ -1,5 +1,4 @@
 #include "Person.h"
-
 #include "PersonImpl.hpp"
 int Person::getAddress() const {
     return impl->address;
