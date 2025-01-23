@@ -151,7 +151,9 @@
     "generator": "cpp",
     "print": "cpp",
     "stdfloat": "cpp",
-    "text_encoding": "cpp"
+    "text_encoding": "cpp",
+    "hash_map": "cpp",
+    "*.inc": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

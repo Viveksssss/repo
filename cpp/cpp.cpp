@@ -447,8 +447,7 @@
 
 
 
-#include<bits/stdc++.h>
-using namespace std;
+
 
 //NVI(Non-Virtual Interface)手法
 // class pureclass{
@@ -479,78 +478,469 @@ using namespace std;
 //         }
 // };
 
+//
+// //Startegy pattern
+// class Gamecharacter;
+// int defaultHealthCalc(const Gamecharacter &gc){
+//     return 100;
+// }
+// class Gamecharacter{
+//     public :
+//         typedef int(*HealthCalc)(const Gamecharacter &);
+//         Gamecharacter(HealthCalc hcf = defaultHealthCalc):healthcalc(hcf){}
+//         int getHealth() const{
+//             return healthcalc(*this);
+//         }
+//     private:
+//         HealthCalc healthcalc;
+// };
+// //函数指针
+// typedef int (*func)(const int, const int);
+// //回调函数
+// int add(const int a,const int b){
+//     return a + b;
+// }
+// int minuss(const int a,const int b){
+//     return a - b;
+// }
+// //高阶函数
+// int funcc(func f,const int a,const int b){
+//     return f(a,b);
+// }
+//
+//
+// class Game{
+//     public:
+//         virtual void play(){
+//             cout << "yes" << endl;
+//         }
+// };
+// class GameFirst:public Game{
+//     public :
+//         void play(){
+//             cout << "first game" << endl;
+//         }
+// };
+// class GameSecond:public GameFirst{
+//     public :
+//         void play(){
+//             cout << "second game" << endl;
+//         }
+// };
+//
+// int main()
+// {
+//     //***************************************
+//     std::ios_base::sync_with_stdio(0);
+//     std::cin.tie(0);
+//     std::cout.tie(0);
+//     //***************************************
+//     // cout << funcc(add, 1, 2) << endl;
+//     // cout << funcc(minuss, 1, 2) << endl;
+//
+//     // std::function<int(const int, const int)> funs1 = add;
+//     // std::function<int(const int, const int)> funs2 = std::bind(minuss, 1, 2);
+//     // cout << funs1(1, 2) << endl;
+//     // cout << funs2(1, 2) << endl;
+//     Game player1;
+//     GameFirst player2;
+//     GameSecond player3;
+//     std::function<void()> func1 = std::bind(&Game::play, &player1);
+//     std::function<void()> func2 = std::bind(&Game::play, &player2);
+//     std::function<void()> func3 = std::bind(&Game::play, &player3);
+//     func1();
+//     func2();
+//     func3();
+//     return 0;
+// }
+//
+// #include <bits/stdc++.h>
+// using namespace std;
+//
+// class RCObject
+// {
+// public:
+//     void addReference()
+//     {
+//         ++refCount;
+//     }
+//     void removeReference()
+//     {
+//         if (--refCount == 0)
+//             delete this;
+//     }
+//     void markUnShareable()
+//     {
+//         shareable = false;
+//     }
+//     bool isShareable() const
+//     {
+//         return shareable;
+//     }
+//     bool isShared() const
+//     {
+//         return refCount > 1;
+//     }
+//
+// protected:
+//     RCObject() : refCount(0), shareable(true) {}
+//     explicit RCObject(const RCObject &) : refCount(0), shareable(true) {}
+//     RCObject &operator=(const RCObject &)
+//     {
+//         return *this;
+//     }
+//     virtual ~RCObject() = 0;
+//
+// private:
+//     int refCount;
+//     bool shareable;
+// };
+//
+// RCObject::~RCObject() {}
+//
+// template <typename T>
+// class RCPtr
+// {
+// public:
+//     RCPtr(T *realptr = 0) : counter(new CounterHolder)
+//     {
+//         counter->pointer = realptr;
+//         init();
+//     }
+//     RCPtr(const RCPtr &rhs) : counter(rhs.counter)
+//     {
+//         init();
+//     }
+//     T *operator->()
+//     {
+//         makeCopy();
+//         return counter->pointer;
+//     }
+//     const T*operator->()const{
+//
+//         return counter->pointer;
+//     }
+//     T &operator*()
+//     {
+//         makeCopy();
+//         return *(counter->pointer);
+//     }
+//     ~RCPtr()
+//     {
+//         counter->removeReference();
+//     }
+//     RCPtr &operator=(const RCPtr &rhs)
+//     {
+//         if (this!= &rhs)
+//         {
+//             counter->removeReference();
+//             counter = rhs.counter;
+//             init();
+//         }
+//         return *this;
+//     }
+//
+// private:
+//     struct CounterHolder : public RCObject
+//     {
+//         T *pointer;
+//         ~CounterHolder()
+//         {
+//             delete pointer;
+//         }
+//     };
+//
+//     CounterHolder *counter;
+//
+//     void init()
+//     {
+//         if (counter->isShared() == false)
+//         {
+//             T *oldValue = counter->pointer;
+//             counter->removeReference();
+//             counter = new CounterHolder;
+//             counter->pointer = new T(*oldValue);
+//             counter->addReference();
+//         }
+//     }
+//     void makeCopy()
+//     {
+//         if (counter->isShared())
+//         {
+//             T *oldValue = counter->pointer;
+//             counter->removeReference();
+//             counter = new CounterHolder;
+//             counter->pointer = new T(*oldValue);
+//             counter->addReference();
+//         }
+//     }
+// };
+// class String
+// {
+// public:
+//     String(char *data) : value(new StringValue(data)) {}
+//     const char &operator[](int index)const
+//     {
+//         return value->data[index];
+//     }
+//     char &operator[](int index)
+//     {
+//         if (value->isShareable())
+//         {
+//             value = new StringValue(value->data);
+//         }
+//         value->markUnShareable();
+//         return value->data[index];
+//     }
+//     char*c_str(){
+//         return value->data;
+//     }
+//     bool operator==(const String &rhs)const{
+//         return &(this->value->data) == &(rhs.value->data);
+//     }
+//
+//
+// private:
+//     struct StringValue : public RCObject
+//     {
+//         char *data;
+//         void init(char *initValue)
+//         {
+//             data = new char[strlen(initValue) + 1];
+//             strcpy(data, initValue);
+//         }
+//
+//         StringValue(char *initValue)
+//         {
+//             init(initValue);
+//         }
+//         StringValue(const StringValue &rhs)
+//         {
+//             if (this != &rhs)
+//             {
+//                 delete[] data;
+//             }
+//             init(rhs.data);
+//         }
+//         StringValue &operator=(const StringValue &rhs)
+//         {
+//             if (this!= &rhs)
+//             {
+//                 delete[] data;
+//                 init(rhs.data);
+//             }
+//             return *this;
+//         }
+//     };
+//     RCPtr<StringValue> value;
+// };
+//
+// std::ostream &operator<<(std::ostream &os, String &str)
+// {
+//     os << str.c_str();
+//     return os;
+// }
+//
+// int main(int argc, char *argv[])
+// {
+//     //***************************************
+//     std::ios_base::sync_with_stdio(0);
+//     std::cin.tie(0);
+//     std::cout.tie(0);
+//     //***************************************
+//     String s = "hello world";
+//     String s2 = s;
+//     String s3("ssss");
+//     cout << s << endl;
+//     cout << s2 << endl;
+//     cout << (s2 == s) << endl;
+//     s.~String();
+//     s2.~String();
+//     cout << s2 << endl;
+//     cout << s << endl;
+//     cout << (s2 == s) << endl;
+//     cout << s3 << endl;
+//     cout << (s3 == s) << endl;
+//     return 0;
+// }
 
-//Startegy pattern
-class Gamecharacter;
-int defaultHealthCalc(const Gamecharacter &gc){
-    return 100;
-}
-class Gamecharacter{
-    public :
-        typedef int(*HealthCalc)(const Gamecharacter &);
-        Gamecharacter(HealthCalc hcf = defaultHealthCalc):healthcalc(hcf){}
-        int getHealth() const{
-            return healthcalc(*this);
-        }
-    private:
-        HealthCalc healthcalc;
-};
-//函数指针
-typedef int (*func)(const int, const int);
-//回调函数
-int add(const int a,const int b){
-    return a + b;
-}
-int minuss(const int a,const int b){
-    return a - b;
-}
-//高阶函数
-int funcc(func f,const int a,const int b){
-    return f(a,b);
-}
+// #include<bits/stdc++.h>
+// using namespace std;
+// class T{
+//     public:
+//         T(){
+//             // throw std::runtime_error(__PRETTY_FUNCTION__);
+//         }
+//         static void *operator new(std::size_t size){
+//             cout << __PRETTY_FUNCTION__ << "size:"<<size<<endl;
+//             return ::operator new(size);
+//         }
+//         static void *operator new(std::size_t size,std::ostream&os){
+//             auto ptr= ::operator new(size);
+//             cout << __PRETTY_FUNCTION__ << "  "<<ptr<<endl;
+//             return ptr;
+//         }
+//         static void operator delete(void *ptr){
+//             cout << __PRETTY_FUNCTION__ << "  "<<ptr<<endl;
+//             static_cast<T *>(ptr)->~T();
+//             ::operator delete(ptr);
+//         } 
+//         static void operator delete(void*ptr,std::ostream&os)noexcept{
+//             cout << __PRETTY_FUNCTION__ << "  "<<ptr<<endl;
+//             static_cast<T *>(ptr)->~T();
+//             // 不调用 ::operator delete(ptr)，因为内存不是由 ::operator new 分配的
+//         } 
+// };
+
+// class P
+// {
+// public:
+//     int t;
+//     P(int x = 10):t(x){}
+//     static void *operator new(std::size_t size)
+//     {
+//         cout << __PRETTY_FUNCTION__ << "size:" << size << endl;
+//         return ::operator new(size);
+//     }
+//     static void *operator new(std::size_t size, void*placement)
+//     {
+//         cout << __PRETTY_FUNCTION__ << "  " << placement << endl;
+//         if(placement==nullptr){
+//             throw std::bad_alloc();
+//         }
+//         return placement;
+//     }
+//     static void operator delete(void *ptr)
+//     {
+//         cout << __PRETTY_FUNCTION__ << "  " << ptr << endl;
+//         static_cast<P *>(ptr)->~P();
+//         ::operator delete(ptr);
+//     }
+//     static void operator delete(void *ptr, void*placement)
+//     {
+//         cout << __PRETTY_FUNCTION__ << "  " << placement << endl;
+//         static_cast<P *>(ptr)->~P();
+//         // 不调用 ::operator delete(ptr)，因为内存不是由 ::operator new 分配的
+//         // 我们这里可以选择free placement，或者不做任何事情
+//         //那意味着我们选择当前对象指针管理placement的内存或者让调用者去管理
+//         ::operator delete[](placement);
+//     }
+// };
+
+// int main(){
+//     //***************************************
+//     std::ios_base::sync_with_stdio(0);
+//     std::cin.tie(0);
+//     std::cout.tie(0);
+//     //***************************************
+//     //1.0
+//     // auto *w = new(std::cout) T();
+//     // cout << "w:"<<w<<endl;
+//     // delete w;
+   
+
+//     //2.0
+//     char *placement = new char[sizeof(P)];
+//     cout << "placement:" << static_cast<void *>(placement) << endl;
+
+//     auto *p = new(placement) P;
+//  cout <<p->t<<endl;
+//     cout << "p:" << p << endl;
+
+//     P::operator delete(p, placement);
+//     p = nullptr;
+//     cout << "after delete p:" << p << endl;
+
+    
+
+//     return 0;
+// }
 
 
-class Game{
-    public:
-        virtual void play(){
-            cout << "yes" << endl;
-        }
-};
-class GameFirst:public Game{
-    public :
-        void play(){
-            cout << "first game" << endl;
-        }
-};
-class GameSecond:public GameFirst{
-    public :
-        void play(){
-            cout << "second game" << endl;
-        }
-};
 
-int main()
-{
+// namespace {
+//     class GameObject{
+//         public:
+//             virtual void collide(GameObject &otherGameObject) = 0;
+//     };
+//     class SpaceShip:public GameObject{};
+//     class SpaceStation:public GameObject{};
+//     class Asteroid:public GameObject{};
+
+//     void shipAsteroid(GameObject &spaceShip, GameObject &asteroid)
+//     {
+//         std::cout << "hit between spaceShip and asteroid" << std::endl;
+//     }
+//     void shipStation(Gameobject &spaceShip, GameObject &spaceStation)
+//     {
+//         std::cout << "hit between spaceShip and spaceStation" << std::endl;
+//     }
+//     void asteroidStation(GameObject&asteroid,GameObject&spaceStation){
+//         std::cout << "hit between asteroid and spaceStation" << std::endl;
+//     }
+
+
+//     typedef void (*HitFunctionPtr)(GameObject &, GameObject &);
+//     typedef unordered_map<pair<string, string>, HitFunctionPtr> HitMap;
+//     pair<string,string>makeStringPair(const char*s1,const char*s2){
+//         return make_pair(s1, s2);
+//     }
+    
+//     HitFunctionPtr lookup(const string&s1,const string&s2){
+//         static unique_ptr<HitMap> collisionMap(initializerMap());
+//         HitMap::iterator mapEntry = collisionMap->find(make_pair(s1, s2));
+//         if(mapEntry == collisionMap->end())
+//             return 0;
+//         return (*mapEntry).second;
+//     }
+
+//     class CollisionMap{
+//         public:
+//             typedef void (*HitFunctionPtr)(GameObject &, GameObject &);
+//             void addEntry(const string&s1,const string&s2,HitFunctionPtr ptr){
+//                 map.insert(make_pair(s1, s2), ptr);
+//             }
+//             void removeEntry(const string&s1,const string&s2){
+//                 map.erase(make_pair(s1, s2));
+//             }
+//             HitFunctionPtr lookup(const string&s1,const string&s2){
+//                 return lookup(s1,s2);
+//             }
+//             static CollisionMap&theCollisionMap(){
+//                 static CollisionMap instance;
+//                 if(is == false){
+//                 HitMap *phm = new HitMap;
+//                     (*phm)[makeStringPair("SpaceShip", "Asteroid")] = &shipAsteroid;
+//                     (*phm)[makeStringPair("SpaceShip", "SpaceStation")] = &shipStation;
+//                     (*phm)[makeStringPair("SpaceStation", "Asteroid")] = &asteroidStation;
+//                     instance.map = phm;
+//                     is = true;
+//                 }
+//                 return instance;
+//             }
+
+//         private:
+//             static HitMap *map;
+//             static bool is;
+//             CollisionMap(){}
+//             CollisionMap(const CollisionMap &){}
+//     };
+// }
+// CollisionMap::is = false;
+// CollisionMap::map = nullptr;
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
     //***************************************
     std::ios_base::sync_with_stdio(0);
     std::cin.tie(0);
     std::cout.tie(0);
     //***************************************
-    // cout << funcc(add, 1, 2) << endl;
-    // cout << funcc(minuss, 1, 2) << endl;
-
-    // std::function<int(const int, const int)> funs1 = add;
-    // std::function<int(const int, const int)> funs2 = std::bind(minuss, 1, 2);
-    // cout << funs1(1, 2) << endl;
-    // cout << funs2(1, 2) << endl;
-    Game player1;
-    GameFirst player2;
-    GameSecond player3;
-    std::function<void()> func1 = std::bind(&Game::play, &player1);
-    std::function<void()> func2 = std::bind(&Game::play, &player2);
-    std::function<void()> func3 = std::bind(&Game::play, &player3);
-    func1();
-    func2();
-    func3();
-    return 0;
+    read
+    cout << __cplusplus << endl;
+    cout << "s" return 0;
 }
+    

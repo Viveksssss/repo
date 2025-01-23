@@ -9,7 +9,7 @@
                 "isDefault": true
             },
             "windows": {
-                "command": "powershell",
+                 "command": "powershell",
                 "args": [
                     "-c",
                     "mingw32-make"
@@ -81,4 +81,6 @@
             }
         }
     ]
+
+
 }
