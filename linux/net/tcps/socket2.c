@@ -87,15 +87,15 @@
 
 // C 
 int main(int argc,char*argv[]){
-    int cfd = socket(AF_INET,SOCK_STREAM,0);
+    int cfd = socket(AF_INET6,SOCK_STREAM,0);
     if(cfd<0){
         perror("socket error!\n");
         return -1;
     }
-    struct sockaddr_in serv;
-    serv.sin_family = AF_INET;
-    serv.sin_port = htons(9999);
-    inet_pton(AF_INET,"192.168.1.10",&serv.sin_addr.s_addr);
+    struct sockaddr_in6 serv;
+    serv.sin6_family =  AF_INET6;
+    serv.sin6_port = htons(9999);
+    inet_pton(AF_INET6,"2409:8a04:c10:d340:e59c:696c:b78a:bc1d",&serv.sin6_addr);
     int ret = connect(cfd,(struct sockaddr*)&serv,sizeof(serv));
     if(ret<0){
         perror("connect error!\n");
