@@ -38,6 +38,9 @@ char *get_mime_type(char *name)
         return "application/ogg";
     if (strcmp(dot, ".pac") == 0)
         return "application/x-ns-proxy-autoconfig";
+    if (strcmp(dot,".mp4") == 0){
+        return "video/mp4";
+    }
 
     return "text/plain; charset=utf-8";
 }

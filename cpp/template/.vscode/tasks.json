@@ -1,0 +1,34 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++",
+			"command": "/usr/bin/g++",
+			"args": [
+				// "-Wall",
+				"-std=c++23",
+				// "-fmodules-ts",
+				"-o",
+				"${fileDirname}/${fileBasenameNoExtension}",
+				"${file}"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "编译器: /usr/bin/g++",
+			"presentation": {
+				"reveal": "never",  // 不显示终端
+				"panel": "shared"    // 使用共享终端
+			}
+			
+		}
+	]
+}

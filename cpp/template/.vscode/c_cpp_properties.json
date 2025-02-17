@@ -4,13 +4,16 @@
             "name": "linux-gcc-x64",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/include/event2"
+                "/usr/include/"
             ],
-            "defines": [],
             "compilerPath": "/usr/bin/g++",
             "cStandard": "c23",
             "cppStandard": "c++23",
-            "intelliSenseMode": "linux-gcc-x64"
+            "intelliSenseMode": "linux-gcc-x64",
+            "compilerArgs": [
+                            "-std=c++23"
+                            // "-fmodules-ts" // 启用模块支持（Clang/GCC）
+                        ]
         }
     ],
     "version": 4

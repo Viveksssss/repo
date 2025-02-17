@@ -119,7 +119,8 @@
     "pub.h": "c",
     "signal.h": "c",
     "strings.h": "c",
-    "wrap.hpp": "c"
+    "wrap.hpp": "c",
+    "wait.h": "c"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "gcc",
@@ -183,5 +184,5 @@
   "workbench.statusBar.visible": true,
   "C_Cpp.errorSquiggles": "disabled",
   "powermode.enabled": true,
-  "editor.cursorBlinking": "smooth" 
+  "editor.cursorBlinking": "smooth"
 }

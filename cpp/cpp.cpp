@@ -928,19 +928,3 @@
 // }
 // CollisionMap::is = false;
 // CollisionMap::map = nullptr;
-
-
-#include<bits/stdc++.h>
-using namespace std;
-
-int main(){
-    //***************************************
-    std::ios_base::sync_with_stdio(0);
-    std::cin.tie(0);
-    std::cout.tie(0);
-    //***************************************
-    read
-    cout << __cplusplus << endl;
-    cout << "s" return 0;
-}
-    

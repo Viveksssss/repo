@@ -1,8 +1,8 @@
 #include "./pub.h"
 
-char *get_mine_type(char *name)
+const char *get_mine_type(const char *name)
 {
-    char *dot;
+    const char *dot;
     dot = strrchr(name, '.');
     if (dot == (char *)0)
     {
@@ -41,7 +41,7 @@ char *get_mine_type(char *name)
 
     return "text/plain; charset=utf-8";
 }
-int get_line(int sock, char *buf, int size)
+int web_event.cppget_line(int sock, char *buf, int size)
 {
     int i = 0;
     char c = '\0';

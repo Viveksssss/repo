@@ -191,6 +191,7 @@ int http_request(int cfd, int epfd)
 		
 		//发送文件内容
 		send_file(cfd, "error.html");	
+		
 	}
 	else //若文件存在
 	{

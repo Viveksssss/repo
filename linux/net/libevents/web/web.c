@@ -7,10 +7,11 @@
 #include <sys/epoll.h>
 #include <sys/socket.h>
 #include <fcntl.h>
-#include <>
+#include <unistd.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include <sys/stat.h>
 
 
 #include "./wrap.h"
@@ -154,7 +155,7 @@ int http_request(int cfd, int epfd){
     }
 
     //转换汉字编码
-    strdecode(pFile, fileName);
+    strdecode(pFile, pFile);
     printf("[%s]\n",pFile);
 
 
@@ -164,7 +165,7 @@ int http_request(int cfd, int epfd){
     if(stat(pFile,&st)<0){
         printf("file not exist\n");
 
-        send_header(cfd, "404", "Not Found", get_mine_type(.html), 0);
+        send_header(cfd, "404", "Not Found", get_mine_type(".html"), 0);
         send_file(cfd, "error.html");
     }else{
         if(S_ISREG(st.st_mode)){
@@ -189,7 +190,7 @@ int http_request(int cfd, int epfd){
                 while(n--){
                     printf("%s\n", namelist[n]->d_name);
                     memset(buffer, 0x00, sizeof(buffer));
-                    if(namelist[n]->_dtype == DT_DIR){
+                    if(namelist[n]->d_type == DT_DIR){
                         sprintf(buffer,"<li><a href=%s/>%s</a></li>", namelist[n]->d_name, namelist[n]->d_name);
                     }else{
                         sprintf(buffer,"<li><a href=%s>%s</a></li>", namelist[n]->d_name, namelist[n]->d_name);
