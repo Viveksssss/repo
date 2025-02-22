@@ -11,9 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -21,40 +19,16 @@ QT_BEGIN_NAMESPACE
 class Ui_Widget
 {
 public:
-    QWidget *widget;
-    QTextEdit *textEdit_2;
-    QWidget *widget_2;
-    QHBoxLayout *horizontalLayout;
-    QTextEdit *textEdit;
     QPushButton *pushButton;
 
     void setupUi(QWidget *Widget)
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName("Widget");
-        Widget->resize(800, 600);
-        widget = new QWidget(Widget);
-        widget->setObjectName("widget");
-        widget->setGeometry(QRect(190, 50, 364, 412));
-        textEdit_2 = new QTextEdit(widget);
-        textEdit_2->setObjectName("textEdit_2");
-        textEdit_2->setGeometry(QRect(0, 30, 351, 381));
-        widget_2 = new QWidget(widget);
-        widget_2->setObjectName("widget_2");
-        widget_2->setGeometry(QRect(0, 0, 352, 41));
-        widget_2->setContextMenuPolicy(Qt::ContextMenuPolicy::DefaultContextMenu);
-        horizontalLayout = new QHBoxLayout(widget_2);
-        horizontalLayout->setObjectName("horizontalLayout");
-        textEdit = new QTextEdit(widget_2);
-        textEdit->setObjectName("textEdit");
-
-        horizontalLayout->addWidget(textEdit);
-
-        pushButton = new QPushButton(widget_2);
+        Widget->resize(476, 362);
+        pushButton = new QPushButton(Widget);
         pushButton->setObjectName("pushButton");
-
-        horizontalLayout->addWidget(pushButton);
-
+        pushButton->setGeometry(QRect(380, 330, 80, 20));
 
         retranslateUi(Widget);
 
@@ -64,7 +38,7 @@ public:
     void retranslateUi(QWidget *Widget)
     {
         Widget->setWindowTitle(QCoreApplication::translate("Widget", "Widget", nullptr));
-        pushButton->setText(QCoreApplication::translate("Widget", "\351\200\211\346\213\251\346\226\207\344\273\266", nullptr));
+        pushButton->setText(QCoreApplication::translate("Widget", "\347\247\273\345\212\250", nullptr));
     } // retranslateUi
 
 };

@@ -280,7 +280,8 @@ Makefile: ../../Case13.pro D:/Software/Qt/6.8.0/mingw_64/mkspecs/win32-g++/qmake
 		D:/Software/Qt/6.8.0/mingw_64/lib/Qt6Core.prl \
 		D:/Software/Qt/6.8.0/mingw_64/lib/Qt6EntryPoint.prl \
 		.qmake.stash \
-		D:/Software/Qt/6.8.0/mingw_64/mkspecs/features/build_pass.prf
+		D:/Software/Qt/6.8.0/mingw_64/mkspecs/features/build_pass.prf \
+		../../Image/res.qrc
 	$(QMAKE) -o Makefile ../../Case13.pro -spec win32-g++ CONFIG+=debug CONFIG+=qml_debug
 D:/Software/Qt/6.8.0/mingw_64/mkspecs/features/spec_pre.prf:
 D:/Software/Qt/6.8.0/mingw_64/mkspecs/features/device_config.prf:
@@ -493,6 +494,7 @@ D:/Software/Qt/6.8.0/mingw_64/lib/Qt6Core.prl:
 D:/Software/Qt/6.8.0/mingw_64/lib/Qt6EntryPoint.prl:
 .qmake.stash:
 D:/Software/Qt/6.8.0/mingw_64/mkspecs/features/build_pass.prf:
+../../Image/res.qrc:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../../Case13.pro -spec win32-g++ CONFIG+=debug CONFIG+=qml_debug
 
