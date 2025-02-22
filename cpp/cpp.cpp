@@ -447,8 +447,7 @@
 
 
 
-#include<bits/stdc++.h>
-using namespace std;
+
 
 //NVI(Non-Virtual Interface)手法
 // class pureclass{

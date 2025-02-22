@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇游戏</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #game-board {
+            background-color: #222;
+            display: grid;
+            grid-template-columns: repeat(20, 20px);
+            grid-template-rows: repeat(20, 20px);
+            gap: 1px;
+        }
+
+        .snake {
+            background-color: #0f0;
+        }
+
+        .food {
+            background-color: #f00;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game-board"></div>
+    <script>
+        const gameBoard = document.getElementById('game-board');
+        const gridSize = 20;
+        let snake = [
+            { x: 10, y: 10 }
+        ];
+        let food = {
+            x: Math.floor(Math.random() * gridSize),
+            y: Math.floor(Math.random() * gridSize)
+        };
+        let direction = 'right';
+        let gameInterval;
+
+        function draw() {
+            gameBoard.innerHTML = '';
+            // 绘制蛇
+            snake.forEach(segment => {
+                const snakeElement = document.createElement('div');
+                snakeElement.classList.add('snake');
+                snakeElement.style.gridColumn = segment.x + 1;
+                snakeElement.style.gridRow = segment.y + 1;
+                gameBoard.appendChild(snakeElement);
+            });
+            // 绘制食物
+            const foodElement = document.createElement('div');
+            foodElement.classList.add('food');
+            foodElement.style.gridColumn = food.x + 1;
+            foodElement.style.gridRow = food.y + 1;
+            gameBoard.appendChild(foodElement);
+        }
+
+        function move() {
+            const head = { ...snake[0] };
+            switch (direction) {
+                case 'up':
+                    head.y--;
+                    break;
+                case 'down':
+                    head.y++;
+                    break;
+                case 'left':
+                    head.x--;
+                    break;
+                case 'right':
+                    head.x++;
+                    break;
+            }
+            snake.unshift(head);
+            // 检查是否吃到食物
+            if (head.x === food.x && head.y === food.y) {
+                // 生成新的食物
+                food = {
+                    x: Math.floor(Math.random() * gridSize),
+                    y: Math.floor(Math.random() * gridSize)
+                };
+            } else {
+                // 移除蛇的尾部
+                snake.pop();
+            }
+            // 检查是否撞墙或撞到自己
+            if (head.x < 0 || head.x >= gridSize || head.y < 0 || head.y >= gridSize) {
+                clearInterval(gameInterval);
+                alert('游戏结束！');
+            }
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    clearInterval(gameInterval);
+                    alert('游戏结束！');
+                }
+            }
+        }
+
+        function changeDirection(event) {
+            const key = event.key;
+            switch (key) {
+                case 'ArrowUp':
+                    if (direction !== 'down') direction = 'up';
+                    break;
+                case 'ArrowDown':
+                    if (direction !== 'up') direction = 'down';
+                    break;
+                case 'ArrowLeft':
+                    if (direction !== 'right') direction = 'left';
+                    break;
+                case 'ArrowRight':
+                    if (direction !== 'left') direction = 'right';
+                    break;
+            }
+        }
+
+        function gameLoop() {
+            move();
+            draw();
+        }
+
+        document.addEventListener('keydown', changeDirection);
+        gameInterval = setInterval(gameLoop, 200);
+        draw();
+    </script>
+</body>
+
+</html>

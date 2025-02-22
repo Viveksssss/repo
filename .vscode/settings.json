@@ -148,7 +148,11 @@
     "typeindex": "cpp",
     "typeinfo": "cpp",
     "valarray": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "cerrno": "c",
+    "fcntl.h": "c",
+    "inet.h": "c",
+    "socket.h": "c"
   },
   "cmake.sourceDirectory": "/home/vivek/Codes/repo/Qt/untitled"
 }
