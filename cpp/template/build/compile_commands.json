@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/vivek/Codes/cpp/template/build",
+  "command": "/usr/bin/c++   -g -std=gnu++23 -o CMakeFiles/main.dir/thread_pool.cpp.o -c /home/vivek/Codes/cpp/template/thread_pool.cpp",
+  "file": "/home/vivek/Codes/cpp/template/thread_pool.cpp",
+  "output": "CMakeFiles/main.dir/thread_pool.cpp.o"
+}
+]

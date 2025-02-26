@@ -10,7 +10,8 @@
 				"-std=c++23",
 				// "-fmodules-ts",
 				"-o",
-				"${fileDirname}/${fileBasenameNoExtension}",
+				// "${fileDirname}/${fileBasenameNoExtension}",
+				"${fileDirname}/output/${fileBasenameNoExtension}",
 				"${file}"
 			],
 			"options": {
