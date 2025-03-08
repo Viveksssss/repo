@@ -29,8 +29,8 @@
     <widget class="QToolBox" name="toolBox">
      <property name="geometry">
       <rect>
-       <x>90</x>
-       <y>30</y>
+       <x>-50</x>
+       <y>10</y>
        <width>131</width>
        <height>211</height>
       </rect>
@@ -44,7 +44,7 @@
         <x>0</x>
         <y>0</y>
         <width>131</width>
-        <height>157</height>
+        <height>148</height>
        </rect>
       </property>
       <attribute name="label">
@@ -56,8 +56,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>131</width>
-        <height>157</height>
+        <width>100</width>
+        <height>30</height>
        </rect>
       </property>
       <attribute name="label">
