@@ -1404,15 +1404,13 @@ std::ostream &operator<<(ostream &os, const ints&a)
     return os;
 }
 
-void func(std::unique_ptr<int>&p){
-    cout << *p << endl;
-}
+
 
 
 template<class T>
 class smart_ptr{
     public:
-        smart_ptr(T*p = nullptr):pointer(p){}
+        explicit smart_ptr(T*p = nullptr):pointer(p){}
 
         T&operator*(){
             return *pointer;
@@ -1423,16 +1421,19 @@ class smart_ptr{
             return pointer;
         }
         ~smart_ptr(){
-            delete pointer;
-        }
-        const smart_ptr &operator=(smart_ptr&&other){
-            if(this!=&other){
-                if(this->pointer!=nullptr)delete this->pointer;
+            if(pointer){
+                delete pointer;
+                pointer = nullptr;
             }
-            this->pointer = other.pointer;
-            other.pointer = nullptr;
-            return *this;
         }
+        // const smart_ptr &operator=(smart_ptr&&other){
+        //     if(this!=&other){
+        //         if(this->pointer!=nullptr)delete this->pointer;
+        //     }
+        //     this->pointer = other.pointer;
+        //     other.pointer = nullptr;
+        //     return *this;
+        // }
         bool operator!(){
             return pointer == nullptr;
         }
@@ -1442,7 +1443,7 @@ class smart_ptr{
 
         template<class newType>
         operator smart_ptr<newType>(){
-            return smart_ptr<newType>(pointer);
+            return smart_ptr<newType>(static_cast<newType*>(pointer));
         }
     private:
         T *pointer;
@@ -1450,15 +1451,22 @@ class smart_ptr{
 };
 class A{
     public:
-        void print(){
+        virtual void print(){
             cout << "A" << endl;
         }
+    virtual ~A(){
+        std::cout << "~A" << std::endl;
+    }
 };
 class B:public A{
     public:
         void print(){
             cout << "B" << endl;
         }
+
+    ~B(){
+        std::cout << "~B" << ::std::endl;
+    }
 };
 
 void func(const smart_ptr<A>&p){
@@ -1473,7 +1481,6 @@ int main(){
     smart_ptr<A> ptr1(new A);
     smart_ptr<B> ptr2(new B);
     func(ptr1);
-    func(ptr2);
-
+    // func(ptr2);
     return 0;
 }
