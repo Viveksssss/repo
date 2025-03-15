@@ -40,7 +40,7 @@ struct sockaddr_in* Init(){
     bzero(&adr,sizeof(adr));
     adr.sin_family = AF_INET;
     adr.sin_port = htons(9999);
-    inet_pton(AF_INET,"192.168.1.10",(struct sockaddr*)&adr.sin_addr);
+    inet_pton(AF_INET,"127.0.0.1",(struct sockaddr*)&adr.sin_addr);
     return &adr;
 }
 

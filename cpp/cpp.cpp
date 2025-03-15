@@ -1374,113 +1374,124 @@
 // }
 
 
-#include<bits/stdc++.h>
-#include<vector>
-using namespace std;
-class ints{
-    public:
-        int a;
-        ints(int x) : a(x) {}
+// #include<bits/stdc++.h>
+// #include<vector>
+// using namespace std;
+// class ints{
+//     public:
+//         int a;
+//         ints(int x) : a(x) {}
 
-        const ints&operator+=(const ints&b){
-            a += b.a;
-            return *this;
-        }
-        ~ints(){
-            cout << "destructor" << endl;
-        }
-        void print()const{
-            cout << a << endl;
-        }
-        const ints operator+(const ints &a) const
-        {
-            return ints(*this) += a;
-        }
-        friend std::ostream &operator<<(ostream &os, const ints&a);
-};
-std::ostream &operator<<(ostream &os, const ints&a)
-{
-    os << a.a;
-    return os;
-}
-
-
+//         const ints&operator+=(const ints&b){
+//             a += b.a;
+//             return *this;
+//         }
+//         ~ints(){
+//             cout << "destructor" << endl;
+//         }
+//         void print()const{
+//             cout << a << endl;
+//         }
+//         const ints operator+(const ints &a) const
+//         {
+//             return ints(*this) += a;
+//         }
+//         friend std::ostream &operator<<(ostream &os, const ints&a);
+// };
+// std::ostream &operator<<(ostream &os, const ints&a)
+// {
+//     os << a.a;
+//     return os;
+// }
 
 
-template<class T>
-class smart_ptr{
-    public:
-        explicit smart_ptr(T*p = nullptr):pointer(p){}
 
-        T&operator*(){
-            return *pointer;
-        }
-        T*operator->()const{
-            if(this->pointer==nullptr)
-                throw std::runtime_error("nullptr");
-            return pointer;
-        }
-        ~smart_ptr(){
-            if(pointer){
-                delete pointer;
-                pointer = nullptr;
-            }
-        }
-        // const smart_ptr &operator=(smart_ptr&&other){
-        //     if(this!=&other){
-        //         if(this->pointer!=nullptr)delete this->pointer;
-        //     }
-        //     this->pointer = other.pointer;
-        //     other.pointer = nullptr;
-        //     return *this;
-        // }
-        bool operator!(){
-            return pointer == nullptr;
-        }
-        T*get(){
-            return pointer;
-        }
 
-        template<class newType>
-        operator smart_ptr<newType>(){
-            return smart_ptr<newType>(static_cast<newType*>(pointer));
-        }
-    private:
-        T *pointer;
-        const smart_ptr &operator=(const smart_ptr &) = delete;
-};
-class A{
-    public:
-        virtual void print(){
-            cout << "A" << endl;
-        }
-    virtual ~A(){
-        std::cout << "~A" << std::endl;
-    }
-};
-class B:public A{
-    public:
-        void print(){
-            cout << "B" << endl;
-        }
+// template<class T>
+// class smart_ptr{
+//     public:
+//         explicit smart_ptr(T*p = nullptr):pointer(p){}
 
-    ~B(){
-        std::cout << "~B" << ::std::endl;
-    }
-};
+//         T&operator*(){
+//             return *pointer;
+//         }
+//         T*operator->()const{
+//             if(this->pointer==nullptr)
+//                 throw std::runtime_error("nullptr");
+//             return pointer;
+//         }
+//         ~smart_ptr(){
+//             if(pointer){
+//                 delete pointer;
+//                 pointer = nullptr;
+//             }
+//         }
+//         // const smart_ptr &operator=(smart_ptr&&other){
+//         //     if(this!=&other){
+//         //         if(this->pointer!=nullptr)delete this->pointer;
+//         //     }
+//         //     this->pointer = other.pointer;
+//         //     other.pointer = nullptr;
+//         //     return *this;
+//         // }
+//         bool operator!(){
+//             return pointer == nullptr;
+//         }
+//         T*get(){
+//             return pointer;
+//         }
 
-void func(const smart_ptr<A>&p){
-    p->print();
-}
-int main(){
-    //***************************************
-    std::ios_base::sync_with_stdio(0);
-    std::cin.tie(0);
-    std::cout.tie(0);
-    //***************************************
-    smart_ptr<A> ptr1(new A);
-    smart_ptr<B> ptr2(new B);
-    func(ptr1);
-    // func(ptr2);
-    return 0;
-}
+            //智能指针的内部类型转换->依靠了编译器对父子类型转换的支持,如果不支持,那么就报错,进而使转换报错
+//         template<class newType>
+//         operator smart_ptr<newType>(){
+//             newType *temp = static_cast<newType*>(pointer);
+//             this->pointer = nullptr;
+//             return smart_ptr<newType>(temp);
+
+//             //下面的写法之所以有问题,是因为,使用static_cast会将指针复制一份新的,但是指向相同的地址
+//             //因此会导致双重释放.
+//             // return smart_ptr<newType>(static_cast<newType*>(pointer));
+//         }
+//     private:
+//         T *pointer;
+//         const smart_ptr &operator=(const smart_ptr &) = delete;
+// };
+// class A{
+//     public:
+//         virtual void print(){
+//             cout << "A" << endl;
+//         }
+//     virtual ~A(){
+//         std::cout << "~A" << std::endl;
+//     }
+// };
+// class B:public A{
+//     public:
+//         void print(){
+//             cout << "B" << endl;
+//         }
+
+//     ~B(){
+//         std::cout << "~B" << ::std::endl;
+//     }
+// };
+
+// void func(const smart_ptr<A>&p){
+//     p->print();
+// }
+// int main(){
+//     //***************************************
+//     std::ios_base::sync_with_stdio(0);
+//     std::cin.tie(0);
+//     std::cout.tie(0);
+//     //***************************************
+//     smart_ptr<A> ptr1(new A);
+//     smart_ptr<B> ptr2(new B);
+//     func(ptr1);
+//     func(ptr2);
+//     return 0;
+// }
+
+
+
+

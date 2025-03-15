@@ -88,6 +88,8 @@
 // B 
 int main(int argc,char*argv[]){
     int sfd = socket(AF_INET,SOCK_STREAM,0);
+    int a = 1;
+    setsockopt(sfd,SOL_SOCKET,SO_REUSEADDR,(char*)&a,sizeof(a));
     if (sfd<0){
         perror("socket error\n");
         return -1;
@@ -97,7 +99,7 @@ int main(int argc,char*argv[]){
     bzero(&serv,sizeof(serv));
     serv.sin_family =AF_INET;
     serv.sin_port = htons(9999);
-    inet_pton(AF_INET,"192.168.1.10",&serv.sin_addr);
+    inet_pton(AF_INET,"127.0.0.1",&serv.sin_addr);
     int ret = bind(sfd,(struct sockaddr*)&serv,sizeof(serv));
     if(ret<0){
         perror("error\n");
@@ -107,34 +109,35 @@ int main(int argc,char*argv[]){
    
     struct sockaddr_in client;
     socklen_t len = sizeof(client);
-
-    int cfd = accept(sfd,(struct sockaddr*)&client,&len);
-    char bufs[16];
-    printf("Now we have connected\n");
-    printf("the ip:%s,the port:%d\n",inet_ntop(AF_INET,&client.sin_addr.s_addr,bufs,sizeof(bufs)),ntohs(client.sin_port));
-
-
-
-    printf("sfd = [%d],cfd = [%d]\n",sfd,cfd);
-    int n = 0;
-    char buf[1024];
     while(1){
-        memset(buf,0x00,sizeof(buf));
-        n = read(cfd,buf,sizeof(buf));
-        if(n == 0){
-            printf("the connect is break!\n");
-            break;
-        }
-        printf("n = %d,buf = %s\n",n,buf);
-        for(int i = 0;i<n;i++){
-            buf[i] = toupper(buf[i]);
-        }
-        
-        write(cfd,buf,n); 
-    }
+        int cfd = accept(sfd,(struct sockaddr*)&client,&len);
 
+      
+        int n = 0;
+        char buf[4096];
+        while(1){
+            memset(buf,0x00,sizeof(buf));
+            n = read(cfd,buf,sizeof(buf));
+            if(n == 0){
+                printf("the connect is break!\n");
+                break;
+            }else if(n < 0){
+                break;
+            }
+            printf("n = %d,buf = %s\n",n,buf);
+            memset(buf,0x00,sizeof(buf));
+            strcpy(buf,"HTTP/1.1 200 OK\r\n"
+                   "Content-Type:text/html\r\n"
+                   "\r\n"
+                   R"(<!DOCTYPE html><html><head><meta charset="utf-8" /><title>电商类型</title></head><body><form method="post"><table  border="" ><tr ><th colspan="" align="center">问卷调查</th></tr><tr><td>姓名:</td><td><input type="text" name="" id="" value="" /></td></tr><tr><td>密码:</td><td><input type="password" name="" id="" value="" /></td></tr><tr><td>性别:</td><td><input  type="radio" name="nv" id="" value="" />:男<input  type="radio" name="nv" id="" value="" />:女</td></tr><tr><td>学历:</td><td><select name=""><option value="">本科</option><option value="">高中</option><option value="">博士</option><!-- 输入法问题打不出来shuoshi --></select></td></tr><tr><td>爱好:</td><td><input type="checkbox" name="1" id="" value="" />读书<input type="checkbox" name="1" id="" value="" />打球<input type="checkbox" name="1" id="" value="" />游戏<input type="checkbox" name="1" id="" value="" />购物</td></tr><tr><td>头像:</td><td><input type="file" name="" id="" value="" /></td></tr><tr  height = "100px"><td>简介:</td><td><textarea rows="" cols=""></textarea></td></tr><tr><td colspan="2" align="center"><input type="button" name="" id="" value="重置" /><input type="button" name="" id="" value="提交" /></td></tr></table></form></body>
+
+)");
+
+            write(cfd,buf,n); 
+        }
+        close(cfd);
+    }
     close(sfd);
-    close(cfd);
 
     return 0;
 }

@@ -4,19 +4,21 @@
       "name": "linux-gcc-x64",
       "includePath": [
         
-        "/home/vivek/Codes/cpp/**"
+        "/usr/include",
+        "/usr/local/include",
+        "${workspaceFolder}/**"
       ],
       "defines": [],
       "compilerPath": "/usr/bin/gcc",
       "cStandard": "c23",
       "cppStandard": "c++23",
-      "compilerPathInCppPropertiesJson": "/usr/bin/gcc",
       "intelliSenseMode": "linux-gcc-x64",
       "mergeConfigurations": false,
       "browse": {
         "path": [
-          "/home/vivek/Codes/cpp/**",
-          "${workspaceFolder}"
+          "/usr/include",
+          "/usr/local/include",
+          "${workspaceFolder}/**"
         ],
         "limitSymbolsToIncludedHeaders": true
       }

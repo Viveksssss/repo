@@ -7,9 +7,10 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
+                "--std=c++23",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/output/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "${fileDirname}"

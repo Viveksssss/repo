@@ -1,92 +1,72 @@
 #include<iostream>
-#include<thread>
 #include<coroutine>
+#include<thread>
+#include<chrono>
 #include<future>
-/*  
- *    this src write for coroutines
- *
- * */
 
-class Awaiter{
+class promise{
 public:
+    struct promise_type{
+
+        std::future<int>future;
+        int r;
+        promise get_return_object(){
+            return promise{std::coroutine_handle<promise::promise_type>::from_promise(*this)};
+        }
+        std::suspend_never initial_suspend()noexcept{return{};}
+        std::suspend_always final_suspend()noexcept{return{};}
+        std::suspend_always yield_value(int n){
+            r = n*10;
+            return {};
+        }
+        void unhandled_exception(){}
+        
+    };
+    std::coroutine_handle<promise_type>_h;
+    ~promise(){
+        _h.destroy();
+    }
+private:
+};
+
+struct test{
+    int r;
     bool await_ready(){
         return false;
+    } // 等待
+    void await_suspend(std::coroutine_handle<promise::promise_type>h){ //协程暂停的时候会调用这个函数
+        
+        h.promise().future = std::move(std::async([this,h](){
+            int n = 3;
+            for(int i = 1;i<n;++i){
+                (this->r)*=i;
+            }
+            if(!h.done())h.resume();
+            return r;
+        }));
     }
-
-    void await_suspend(std::coroutine_handle<> handle){
-        std::async([=](){
-              using namespace std::chrono_literals;
-              // sleep 1s
-              std::this_thread::sleep_for(5s); 
-              // 恢复协程
-              handle.resume();
-            
-        });
-    }
-    
-    Awaiter await_transform(int value) {  // 需要返回Awaiter对象
-        this->value = value;
-        return Awaiter(value);  // 构造包含value的Awaiter
-    }
-
-    int await_resume(){
-        return value;
-    }
-    Awaiter(int value):value(value){}
-private:
-    int value;
+    int await_resume()const noexcept{return r;}
 };
 
-
-class Result{
-public:
-    class promise_type{
-    public:
-        Result get_return_object(){
-            return Result{std::coroutine_handle<Result::promise_type>::from_promise(*this)};
-        }
-        std::suspend_never initial_suspend()noexcept{return {};}
-        std::suspend_never final_suspend()noexcept{return {};}
-    
-        void return_value(int value){
-            
-        }
-        void unhandled_exception() {
-            auto exception = std::current_exception(); // 获取当前异常
-            std::rethrow_exception(exception); // 抛出异常
-        }
-
-        Awaiter await_transform(int value) {
-              this->value = value;
-              return Awaiter(value);
-        }
-        int value;
-    };
-    int next(){
-        handle.resume();
-        return handle.promise().value;
-    }
-
-    explicit Result(std::coroutine_handle<promise_type> _handle) 
-            : handle(_handle) {}
-private:
-    std::coroutine_handle<promise_type> handle;
-};
-
-
-Result sequence(){
-    int i = 0;
-    while(true){
-        co_await i++;
-    }
+inline auto operator co_await(test t){
+    std::cout << "co_await重载"<<std::endl;
+    return t;
 }
 
+promise f(){
+    test t{6};
+    int a = 0;
+    int v = co_await t;
+    std::cout << "v:" << v << std::endl;
+    co_yield 100;
+}
+int main(int argc, char const *argv[]){
+    using namespace std::literals;
+    auto result = f();
+    std::cout << "main" << std::endl;
+    result._h.promise().future.wait();
+    // result._h.resume();
+    std::cout << std::boolalpha << "done :" << result._h.done() << std::endl;
+    std::cout << "co_yield value = " << result._h.promise().r << std::endl;
 
-
-int main(){
-    auto generator = sequence();
-    for(int i = 0;i<5;i++){
-        std::cout << generator.next() << std::endl;
-    }
-    return 0;
 }

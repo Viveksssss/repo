@@ -155,7 +155,8 @@
     "hash_map": "cpp",
     "*.inc": "cpp",
     "queue": "cpp",
-    "threads": "cpp"
+    "threads": "cpp",
+    "ios": "cpp"
   },
-  "C_Cpp.errorSquiggles": "disabled"
+  "C_Cpp.errorSquiggles": "enabled"
 }
