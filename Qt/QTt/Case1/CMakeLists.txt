@@ -48,6 +48,7 @@ else()
             res.qrc
             datamanager.h datamanager.cpp
             studentinfowidget.h studentinfowidget.cpp studentinfowidget.ui
+            tabledelegates.h
         )
     endif()
 endif()

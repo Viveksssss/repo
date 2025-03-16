@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QByteArray>
+#include <QTableWidgetItem>
 namespace Ui {
 class StudentInfoWidget;
 }
@@ -22,12 +23,12 @@ private slots:
 
     void on_buttonDelRow_clicked();
 
+    void handleItemChanged(QTableWidgetItem*item);
 private:
     QGroupBox*createFormGroup();
     QGroupBox*createPhotoGroup();
     void handleDialogAccepted(QGroupBox*formGroup,QGroupBox*photoGroup);
     void refreshTable();
-
     QByteArray photoData;
     Ui::StudentInfoWidget *ui;
 };
