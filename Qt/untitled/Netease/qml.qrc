@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>LeftPage/LeftPage.qml</file>
+        <file>RightPage/RightPage.qml</file>
+        <file>PlayMusic/PlayMusic.qml</file>
+        <file>Common/ZWindow.qml</file>
+        <file>RightPage/MinAndMax/MinAndMax.qml</file>
+        <file>RightPage/Info/Info.qml</file>
+        <file>RightPage/Search/Search.qml</file>
+        <file>BasicConfig/BasicConfig.qml</file>
+        <file>BasicConfig/qmldir</file>
+        <file>RightPage/Info/LoginPopup.qml</file>
+        <file>RightPage/Info/OtherPopupLogin.qml</file>
+        <file>images/qrcode.jpg</file>
+        <file>RightPage/Info/StackPages/CloudMusic.qml</file>
+        <file>RightPage/Info/StackPages/Settings.qml</file>
+    </qresource>
+</RCC>

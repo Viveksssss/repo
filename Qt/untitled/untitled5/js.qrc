@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>worker.js</file>
+    </qresource>
+</RCC>

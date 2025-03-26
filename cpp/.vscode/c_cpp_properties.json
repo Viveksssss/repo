@@ -1,26 +1,26 @@
 {
-  "configurations": [
-    {
-      "name": "linux-gcc-x64",
-      "includePath": [
-        
-        "/home/vivek/Codes/cpp/**"
-      ],
-      "defines": [],
-      "compilerPath": "/usr/bin/gcc",
-      "cStandard": "c23",
-      "cppStandard": "c++23",
-      "compilerPathInCppPropertiesJson": "/usr/bin/gcc",
-      "intelliSenseMode": "linux-gcc-x64",
-      "mergeConfigurations": false,
-      "browse": {
-        "path": [
-          "/home/vivek/Codes/cpp/**",
-          "${workspaceFolder}"
-        ],
-        "limitSymbolsToIncludedHeaders": true
-      }
-    }
-  ],
-  "version": 4
+    "configurations": [
+        {
+            "name": "linux-gcc-x64",
+            "includePath": [
+                "/home/vivek/Codes/cpp/**",
+                "D:\\\\Software\\\\qt\\\\6.9.0\\\\mingw_64\\\\include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c23",
+            "cppStandard": "c++23",
+            "compilerPathInCppPropertiesJson": "/usr/bin/gcc",
+            "intelliSenseMode": "linux-gcc-x64",
+            "mergeConfigurations": false,
+            "browse": {
+                "path": [
+                    "/home/vivek/Codes/cpp/**",
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ],
+    "version": 4
 }
